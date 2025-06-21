@@ -4,22 +4,10 @@ const User = require("../models/user.js");
 const app = express();
 const port = 3000;
 
-// SignUp
-// Post Request gonna to backend
-// Send Req.body data which given by postman into the
-// Low level thinking
-// When user SignUp page Then store into the database
-
-// write api for storing the data into backend
-// when user login page
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
-// creating the new instance of new user model
-// creating the new instance of user model into mongoose (database)
-// firstname,lastname,emaiID,password,age,gender
 
 app.post("/signup", (req, res) => {
   const user = new User({
