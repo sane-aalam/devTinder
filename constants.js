@@ -1,1 +1,0 @@
-export default DB_NAME = "devTinder";

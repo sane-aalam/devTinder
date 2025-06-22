@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("../config/database.js");
 const User = require("../models/user.js");
 const app = express();
-const port = process.env.PORT || 3000 
+const port = 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

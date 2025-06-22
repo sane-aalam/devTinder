@@ -12,7 +12,7 @@
   "dependencies": {
     "express": "^5.1.0",
     "mongodb": "6.16",
-    "mongoose": "^8.14.1"
+    "mongoose": "^8.16.0"
   },
   "repository": {
     "type": "git",
