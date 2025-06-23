@@ -2,7 +2,7 @@ const express = require("express");
 const connectDB = require("../config/database.js");
 const User = require("../models/user.js");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -10,11 +10,11 @@ app.get("/", (req, res) => {
 
 app.post("/signup", (req, res) => {
   const user = new User({
-    firstName: "Akshay 2",
-    lastName: "saini",
-    emailId: "akshaysaini@gmail.com",
-    password: "akshaysaini@123",
-    age: 25,
+    firstName: "rohit",
+    lastName: "sharma",
+    emailId: "rohitsharma@gmail.com",
+    password: "rohitsharma@123",
+    age: 40,
     gender: "male",
   });
 
