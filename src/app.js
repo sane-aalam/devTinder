@@ -9,19 +9,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-  const user = new User({
-    firstName: "rohit",
-    lastName: "sharma",
-    emailId: "rohitsharma@gmail.com",
-    password: "rohitsharma@123",
-    age: 40,
-    gender: "male",
-  });
-
-  user.save();
-  res.send("user added clearly");
+  const user = req.body;
+  console.log(user);
 });
-
 
 connectDB()
   .then(() => {
@@ -32,4 +22,4 @@ connectDB()
   })
   .catch((err) => {
     console.error("database can not established");
-  });
+});
