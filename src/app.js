@@ -1,29 +1,42 @@
 const express = require("express");
-const connectDB = require("../config/database.js");
-const User = require("../models/user.js");
+const connectDB = require("./config/database.js");
+const User = require("./models/user.js");
+const {ValidatorSignData} = require("./Utils/Validation.js");
+const bcrypt = require("bcrypt");
+
 const app = express();
 const port = 3000;
 
 // Middleware to parse JSON data from the request body
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-//! Create POST /sigup API to add data to database
-//! Error Handling using try , catch
-
 app.post("/signup", async (req, res) => {
-  const user = new User(req.body);
   try {
+
+    // Validate data in Signup API
+    ValidatorSignData(req);
+    const { firstname, lastname, emailId, age, gender, password } = req.body;
+    // Create PasswordHash using bcrypt.hash
+    // save the user is excrupted password
+    const PasswordHash = await bcrypt.hash(password, 10); // 10 is salt rounds
+
+    const user = new User({
+      firstname,
+      lastname,
+      emailId,
+      gender,
+      age,
+      password: PasswordHash,
+    });
+
     await user.save();
     return res.status(201).json({
       user,
       msg: "User successfully added to the database",
     });
   } catch (error) {
-    res.status(400).json({ error: err.message });
+    console.log("error -", error);
+    res.status(400).json({ error: error.message });
   }
 });
 
