@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema(
     age: {
       type: Number,
       min: 18,
-      max: 50,
+      max: 60,
     },
     skills: {
       type: [String], // e.g., ["JavaScript", "Node.js"]

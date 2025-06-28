@@ -87,6 +87,12 @@
  - Create login API
  - Compare passwords and throw errors if email or password is invalid
 
+<br>
+- Try-catch
+- First thing we can do is find a user based on their username which ideally will be unique. This is done through using findOne on our User model via mongoose as we have in a previous blog post.
+- We create our try/catch block since again this is an async function.
+- First in our try black we will asynchronously compare the password we received in the request to the hashed one stored in the database using bcryt.compare and passing in first the request password and then the hashed password associated with the user we stored in a constant earlier. Bcrypt will compare and handle the hashing and provide a true or false value.
+
  <br>
 
  - install cookie-parser

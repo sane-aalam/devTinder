@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
-const {ValidatorSignData} = require("./Utils/Validation.js");
+const { ValidatorSignData } = require("./Utils/Validation.js");
 const bcrypt = require("bcrypt");
 
 const app = express();
@@ -12,7 +12,6 @@ app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   try {
-
     // Validate data in Signup API
     ValidatorSignData(req);
     const { firstname, lastname, emailId, age, gender, password } = req.body;
@@ -32,10 +31,34 @@ app.post("/signup", async (req, res) => {
     await user.save();
     return res.status(201).json({
       user,
-      msg: "User successfully added to the database",
+      msg: "User successfully added to the DB!",
     });
   } catch (error) {
-    console.log("error -", error);
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Create login API
+//  - Compare passwords and throw errors if email or password is invalid
+app.post("/login", async (req, res) => {
+  try {
+    const { emailId, password } = req.body;
+    const user = await User.findOne({ emailId });
+
+    if (!user) {
+      throw new Error("Invalid credentials!");
+    }
+
+    // 
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log("isPasswordValid -",isPasswordValid);
+
+    if (isPasswordValid) {
+      res.send("Login Successfully!");
+    } else {
+      throw new Error("Invalid credentials!");
+    }
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
@@ -87,7 +110,6 @@ app.delete("/user", async (req, res) => {
 });
 
 // update by userID
-
 app.put("/user/:id", async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body; // Contains fields to update (name, email,gender)
