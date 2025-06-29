@@ -3,12 +3,15 @@ const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
 const { ValidatorSignData } = require("./Utils/Validation.js");
 const bcrypt = require("bcrypt");
+var cookieParser = require("cookie-parser");
+var jwt = require("jsonwebtoken");
 
 const app = express();
 const port = 3000;
 
 // Middleware to parse JSON data from the request body
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   try {
@@ -49,15 +52,37 @@ app.post("/login", async (req, res) => {
       throw new Error("Invalid credentials!");
     }
 
-    // 
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log("isPasswordValid -",isPasswordValid);
+    console.log("isPasswordValid -", isPasswordValid);
 
     if (isPasswordValid) {
+      // sending token, when user login[with emailId,password]
+      var token = jwt.sign({ _id: user._id }, "devTinder$7302");
+
+      res.cookie("token", token);
       res.send("Login Successfully!");
     } else {
       throw new Error("Invalid credentials!");
     }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// create GET /profile APi and check if you get the cookie back
+app.get("/profile", async (req, res) => {
+  try {
+    const cookies = req.cookies;
+    const { token } = cookies;
+    // token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9yJfaWQiOiI2ODYwMzRlOGFjYTQ1YzBjMDY2NzhhZGUiLCJp
+
+    const decodedMassage = await jwt.verify(token, "devTinder$7302");
+    console.log(decodedMassage);
+    const { _id } = decodedMassage;
+    console.log(_id);
+
+    const user = await User.findById({ _id });
+    res.send(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
