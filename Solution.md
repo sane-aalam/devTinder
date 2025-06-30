@@ -120,6 +120,8 @@
  - Create PATCH /profile/edit
  - Create PATCH /profile/password API => forgot password API
  - Make you validate all data in every POST, PATCH apis
+ - Most of senior engineer, they will direct write down router.post(/)
+ - rounter.get(/,()=>{}) == app.get(/,()=>{}), they both are equal 
 
  <br>
 
