@@ -1,6 +1,5 @@
-
-// npm package: To validate email and password using the validator 
-const validator = require('validator');
+// npm package: To validate email and password using the validator
+const validator = require("validator");
 
 const ValidatorSignData = (req) => {
   const { firstname, lastname, emailId, password } = req.body;
@@ -14,6 +13,27 @@ const ValidatorSignData = (req) => {
   }
 };
 
+const validateEditProfileData = (req) => {
+  const InputDataUser = req.body;
+  const allowedEditFields = [
+    "firstName",
+    "lastName",
+    "emailId",
+    "photoUrl",
+    "gender",
+    "age",
+    "about",
+    "skills",
+  ];
+
+  const isEditAllowed = Object.keys(InputDataUser).every((field) => {
+    allowedEditFields.includes(field);
+  });
+
+  return isEditAllowed;
+};
+
 module.exports = {
-    ValidatorSignData
-}
+  ValidatorSignData,
+  validateEditProfileData
+};

@@ -7,8 +7,9 @@ const cookieParser = require("cookie-parser");
 //* Middleware to parse JSON data from the request body
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
-// import all routers into app.js
+//! import all routers into app.js
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
@@ -17,7 +18,7 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 
-// Connect to MongoDB database using Mongoose
+//! Connect to MongoDB database using Mongoose
 connectDB()
   .then(() => {
     console.log("database connection is established");
