@@ -1,7 +1,6 @@
-
 const express = require("express");
 const profileRouter = express.Router();
-const {isUserAuthenticated} = require("./middlewares/auth.js");
+const { isUserAuthenticated } = require("../middlewares/auth.js");
 
 profileRouter.get("/profile", isUserAuthenticated, (req, res) => {
   try {
@@ -12,4 +11,4 @@ profileRouter.get("/profile", isUserAuthenticated, (req, res) => {
   }
 });
 
-modules.export = profileRouter;
+module.exports = profileRouter;

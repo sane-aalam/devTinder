@@ -1,14 +1,24 @@
-
+// part1:
 //  - Create routes folder for managing auth,profile, request routers
 //  - create authRouter, profileRouter, requestRouter
 //  - Import these routers in app.js
 
-const express = require("express");
+// part2:
+//  - Create POST /logout API
+//  - Create PATCH /profile/edit
+//  - Create PATCH /profile/password API => forgot password API
+//  - Make you validate all data in every POST, PATCH apis
+
+const express = require('express')
 const authRouter = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("./models/user.js");
-const { ValidatorSignData } = require("./Utils/Validation.js");
+const User = require("../models/user.js");
+const { ValidatorSignData } = require("../Utils/Validation.js");
 
+// define the home page route
+authRouter.get('/home', (req, res) => {
+  res.send('home page')
+})
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -19,7 +29,7 @@ authRouter.post("/signup", async (req, res) => {
     // save the user is excrupted password
     const PasswordHash = await bcrypt.hash(password, 10); // 10 is salt rounds
 
-    const user = new User({
+    const savedUser = new User({
       firstname,
       lastname,
       emailId,
@@ -28,16 +38,12 @@ authRouter.post("/signup", async (req, res) => {
       password: PasswordHash,
     });
 
-    await user.save();
-    return res.status(201).json({
-      user,
-      msg: "User successfully added to the DB!",
-    });
+    await savedUser.save();
+    res.json({ message: "User Added successfully!", data: savedUser });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
-
 
 /**
  * @route   POST /login
@@ -70,10 +76,10 @@ authRouter.post("/login", async (req, res) => {
       throw new Error("Invalid credentials!");
     }
     const isPasswordValid = await user.validatePassword(password);
-    
+
     if (isPasswordValid) {
       const token = await user.getJWT();
-      res.cookie("token", token,{
+      res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 3600000),
       });
       res.send("Login Successfully!");
