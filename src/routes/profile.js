@@ -35,11 +35,11 @@ profileRouter.patch("/profile/edit", isUserAuthenticated, async (req, res) => {
 });
 
 //* PATCH Route: Update Logged-in User's Password
-/**
+/*
  * PATCH /update-password
  * Body: { email, password, newPassword }
  * Description: Updates the user's password after validating email & current password.
- */
+*/
 
 profileRouter.patch(
   "/profile/password",

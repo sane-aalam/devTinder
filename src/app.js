@@ -28,4 +28,4 @@ connectDB()
   })
   .catch((err) => {
     console.error("database can not established");
-  });
+});

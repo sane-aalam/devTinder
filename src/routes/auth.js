@@ -1,13 +1,3 @@
-// part1:
-//  - Create routes folder for managing auth,profile, request routers
-//  - create authRouter, profileRouter, requestRouter
-//  - Import these routers in app.js
-
-// part2:
-//  - Create POST /logout API
-//  - Create PATCH /profile/edit
-//  - Create PATCH /profile/password API => forgot password API
-//  - Make you validate all data in every POST, PATCH apis
 
 const express = require("express");
 const authRouter = express.Router();
@@ -15,12 +5,6 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 const { ValidatorSignData } = require("../Utils/Validation.js");
 
-
-// define the home page route
-authRouter.get("/home", (req, res) => {
-  console.log("testing app working fine!")
-  res.send("home page");
-});
 
 authRouter.post("/signup", async (req, res) => {
   try {
