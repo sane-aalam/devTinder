@@ -9,16 +9,18 @@
 //  - Create PATCH /profile/password API => forgot password API
 //  - Make you validate all data in every POST, PATCH apis
 
-const express = require('express')
+const express = require("express");
 const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 const { ValidatorSignData } = require("../Utils/Validation.js");
 
+
 // define the home page route
-authRouter.get('/home', (req, res) => {
-  res.send('home page')
-})
+authRouter.get("/home", (req, res) => {
+  console.log("testing app working fine!")
+  res.send("home page");
+});
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -89,6 +91,20 @@ authRouter.post("/login", async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+});
+
+authRouter.post("/logout", (req, res) => {
+  const { token } = req.cookies;
+
+  // expires token current time
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+  });
+
+  return res.json({
+    msg: "logout successfully!",
+    "token": token,
+  });
 });
 
 module.exports = authRouter;
