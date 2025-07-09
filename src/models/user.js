@@ -72,9 +72,9 @@ const userSchema = new mongoose.Schema(
 
 // userSchema = [getJWT,passwordValidation METHOD which connected with USER]
 // generate JWT token with expires_date
-userSchema.methods.getJWT = async function () {
+userSchema.methods.getJWT = function () {
   const user = this;
-  const token = await jwt.sign({ _id: user._id }, "devTinder$7302", {
+  const token = jwt.sign({ _id: user._id }, "devTinder$7302", {
     expiresIn: "7d",
   });
   return token;
