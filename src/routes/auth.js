@@ -1,10 +1,8 @@
-
 const express = require("express");
 const authRouter = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/user.js");
 const { ValidatorSignData } = require("../Utils/Validation.js");
-
 
 authRouter.post("/signup", async (req, res) => {
   try {
@@ -85,10 +83,7 @@ authRouter.post("/logout", (req, res) => {
     expires: new Date(Date.now()),
   });
 
-  return res.json({
-    msg: "logout successfully!",
-    "token": token,
-  });
+  res.send("Logout Successfully!");
 });
 
 module.exports = authRouter;

@@ -71,21 +71,24 @@ const userSchema = new mongoose.Schema(
 );
 
 // userSchema = [getJWT,passwordValidation METHOD which connected with USER]
-// generate JWT token with expires_date 
-userSchema.methods.getJWT = async function(){
+// generate JWT token with expires_date
+userSchema.methods.getJWT = async function () {
   const user = this;
-  const token = await jwt.sign({ _id: user._id }, "devTinder$7302",{
+  const token = await jwt.sign({ _id: user._id }, "devTinder$7302", {
     expiresIn: "7d",
   });
   return token;
-}
+};
 
-userSchema.methods.validatePassword = async function(passwordInputByUser){
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
   const user = this;
   const passwordHash = user.password;
-  const isPasswordValid = await bcrypt.compare(passwordInputByUser,passwordHash);
+  const isPasswordValid = await bcrypt.compare(
+    passwordInputByUser,
+    passwordHash
+  );
   return isPasswordValid;
-}
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
