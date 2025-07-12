@@ -1,8 +1,11 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const connectDB = require("./config/database.js");
 const app = express();
-const port = 3000;
+
 const cookieParser = require("cookie-parser");
+const port = process.env.PORT || 3000;
+dotenv.config();
 
 //* Middleware to parse JSON data from the request body
 app.use(express.json());
@@ -28,4 +31,4 @@ connectDB()
   })
   .catch((err) => {
     console.error("database can not established");
-});
+  });
