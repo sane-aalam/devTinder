@@ -9,6 +9,7 @@ requestRouter.post("/request/send/:status/:toUserId", isUserAuthenticated, async
       const fromUserId = req.user._id;
       const toUserId = req.params.toUserId;
       const status = req.params.status;
+      // const {toUserId,status} = req.params;
 
       // allowed status user can send request
       // only have ignored/interested status
@@ -41,7 +42,7 @@ requestRouter.post("/request/send/:status/:toUserId", isUserAuthenticated, async
         });
       }
 
-      // save into db
+      // create the document,then save into db
       const connectionRequest = new ConnectionRequest({
         fromUserId,
         toUserId,
@@ -61,4 +62,43 @@ requestRouter.post("/request/send/:status/:toUserId", isUserAuthenticated, async
   }
 );
 
+// to understand the status send by user, keep name of variable clean
+// status = given by user (accepted, rejected)
+requestRouter.post("/request/review/:status/:requestId", isUserAuthenticated, async (req, res) => {
+    try {
+      const loggedInUser = req.user;
+      const { status, requestId } = req.params;
+
+      // allowed status interested,then only able to accepted the request
+      const allowedStatus = ["accepted", "rejected"];
+      if (!allowedStatus.includes(status)) {
+        return res
+          .status(400)
+          .json({ message: "Invalid status type: " + status });
+      }
+
+      const connectionRequest = await ConnectionRequest.findOne({
+        _id: requestId,
+        toUserId: loggedInUser._id,
+        status: "interested",
+      });
+
+      if (!connectionRequest) {
+        return res.status(400).json({
+          success: false,
+          message: "Connection request not exists",
+        });
+      }
+
+      connectionRequest.status = status;
+      const data = await connectionRequest.save();
+
+      res.json({ message: "Connection request " + status, data });
+    } catch (error) {
+      res.status(400).send("ERROR: " + error.message);
+    }
+  }
+);
+
 module.exports = requestRouter;
+
