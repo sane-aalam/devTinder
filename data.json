@@ -1,0 +1,34 @@
+[
+  {
+    "firstname": "Shah Rukh",
+    "lastname": "Khan",
+      "emailId": "srkkingkhan@gmail.com",
+    "password": "SRKking1@123",
+    "gender": "male",
+    "age": 58
+  },
+  {
+    "firstname": "Salman",
+    "lastname": "Khan",
+    "emailId": "salmankhanbhai@gmail.com",
+    "password": "SalmanBhai@123",
+    "gender": "male",
+    "age": 58
+  },
+  {
+    "firstname": "John",
+    "lastname": "Abraham",
+    "emailId": "johnabfit@gmail.com",
+    "password": "JohnBhai@123",
+    "gender": "male",
+    "age": 51
+  },
+  {
+    "firstname": "Elon",
+    "lastname": "Musk",
+    "emailId": "elonrocket@gmail.com",
+    "password": "TeslaChacha@123",
+    "gender": "male",
+    "age": 53
+  }
+]
