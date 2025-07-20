@@ -1,5 +1,3 @@
-
-
 const mongoose = require("mongoose");
 
 const connectionRequestSchema = new mongoose.Schema(
@@ -26,7 +24,6 @@ const connectionRequestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 // compound index
 connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
 
@@ -45,8 +42,6 @@ const ConnectionRequest = mongoose.model(
 );
 
 module.exports = ConnectionRequest;
-
-
 
 // learning -
 // step-1 import mongoose
