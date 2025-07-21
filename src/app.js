@@ -12,7 +12,11 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:7777',
+  credentials: true, // optional, if you're using cookies or sessions
+}));
 
 //! import all routers into app.js
 const authRouter = require("./routes/auth");
